@@ -20,24 +20,28 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
     
+ // Retrieves a list of students by their age.
     @GetMapping("/getByAge/{age}")
     public List<StudentDetails> getStudentsByAge(@PathVariable int age) {
         List<StudentDetails> students = studentRepository.findByAge(age);
         return students;
     }
-    
+
+ // Retrieves a list of students by their class number.
     @GetMapping("/getByClassNum/{classNum}")
     public List<StudentDetails> getStudentsByClassNum(@PathVariable int classNum) {
         List<StudentDetails> students = studentRepository.findByClassNum(classNum);
         return students;
     }
-     
+
+ // Adds a new student to the database.
     @PostMapping("/add")
     public String addStudent(@RequestBody StudentDetails student) {
         studentRepository.save(student);
         return "Student added successfully!";
     }
-
+    
+ // Updates the details of a student identified by their name.
     @PostMapping("/update/{name}")
     public String updateStudent(@PathVariable String name, @RequestBody StudentDetails updatedStudent) {
         StudentDetails existingStudent = studentRepository.findStudentByName(name);
@@ -51,7 +55,8 @@ public class StudentController {
             return "Student not found!";
         }
     }
-    
+
+ // Retrieves details of a student by their name.
     @GetMapping("/get/{name}")
     public StudentDetails getStudent(@PathVariable String name) {
         StudentDetails student = studentRepository.findStudentByName(name);        
@@ -59,7 +64,8 @@ public class StudentController {
     	
 //    	return studentRepository.findAll();
     }
-
+    
+ // Deletes a student identified by their name.
 @PostMapping("/delete/{name}")
 public String deleteStudent(@PathVariable String name) {
     StudentDetails student = studentRepository.findStudentByName(name);
